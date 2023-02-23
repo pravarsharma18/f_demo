@@ -50,6 +50,9 @@ def get_single_user(id):
 
 
 def update_single_user(id, data):
+    user = db.session.query(User).filter_by(id=id).first()
+    if not user:
+        return jsonify({"user": "User Not Found"}), 400
     user = db.session.query(User).filter_by(id=id)
     user.update(data)
     db.session.commit()
