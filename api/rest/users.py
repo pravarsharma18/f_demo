@@ -1,9 +1,9 @@
-import json
+# import json
 from flask import Blueprint, request, make_response, jsonify
 import jwt
 from datetime import datetime, timedelta
 from conf.database import Config
-from functools import wraps
+# from functools import wraps
 
 from api.helper.user_crud import (get_all_users, add_a_users, get_single_user,
                                   update_single_user)
@@ -14,7 +14,7 @@ USER_BLUEPRINT = Blueprint('user', __name__, url_prefix='/api/')
 @USER_BLUEPRINT.route("/user", methods=["GET", "POST"])
 def get_users():
     if request.method == "POST":
-        data = json.loads(request.data)
+        data = request.get_json()
         return add_a_users(data)
     return get_all_users()
 
@@ -22,7 +22,7 @@ def get_users():
 @USER_BLUEPRINT.route("/user/<int:id>", methods=["GET", "PUT", "PATCH"])
 def update_user(id):
     if request.method == "PUT" or request.method == "PATCH":
-        data = json.loads(request.data)
+        data = request.get_json()
         return update_single_user(id, data)
     if request.method == "DELETE":
         pass
@@ -42,7 +42,6 @@ def login():
     return make_response("could not verify", 401, {"WWW-Authenticate": "Basic realm='Login Required'"})
 
 
-def token_required(f):
-    @wraps(f)
-    def decorator(*args, **kwargs):
-        
+# def token_required(f):
+#     @wraps(f)
+#     def decorator(*args, **kwargs):
