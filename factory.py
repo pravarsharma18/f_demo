@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_migrate import Migrate
 
-from conf.database import db, bcrypt, Config
+from conf.database import db, bcrypt, ma, Config
 
 
 def create_app():
@@ -12,6 +12,7 @@ def create_app():
     db.init_app(app)
     bcrypt.init_app(app)
     Migrate(app, db)
+    ma.init_app(app)
 
     from api.rest import users
     app.register_blueprint(users.USER_BLUEPRINT)

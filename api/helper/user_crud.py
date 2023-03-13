@@ -1,19 +1,15 @@
 from flask import jsonify
 from api.db.users import User
+from api.schema.user import UserSchema
 from conf.database import db
 from conf.database import bcrypt
 
 
 def get_all_users():
     users = db.session.query(User).all()
-    users_list = []
-    for user in users:
-        users_list.append({
-            "id": user.id,
-            "username": user.username,
-            "email": user.email
-        })
-    return jsonify({"users": users_list})
+    schema = UserSchema(many=True)
+    user_ = schema.dump(users)
+    return jsonify({"users": user_})
 
 
 def add_a_users(data):
