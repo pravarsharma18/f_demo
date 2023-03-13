@@ -12,3 +12,6 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = True
     SECRET_KEY = "0lldqz1iPvbPe4K6gId5nXschFYwKdrruWt_8Q9Mn0g"
+    RABBIT_HOST = 'localhost'
+    RABBIT_PORT = 5672
+    RABBIT_EXCHANGE = 'flask_exchange'

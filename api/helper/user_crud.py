@@ -3,6 +3,11 @@ from api.db.users import User
 from api.schema.user import UserSchema
 from conf.database import db
 from conf.database import bcrypt
+from api.channels.publisher import Publisher
+import json
+
+
+publisher = Publisher()
 
 
 def get_all_users():
@@ -29,7 +34,8 @@ def add_a_users(data):
                 is_active=True)
     db.session.add(user)
     db.session.commit()
-
+    # creating queue
+    publisher.publish('add.user', json.dumps({"id": user.id, "username": user.username, "email": user.email}))
     return jsonify({"user": "Successfully Created"}), 201
 
 
