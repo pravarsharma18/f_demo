@@ -8,7 +8,7 @@ class Publisher:
 
     def publish(self, routing_key, message):
         connection = self.create_connection()
-        # Create a new channel with the next available channel number or pass in a channel number to use 
+        # Create a new channel with the next available channel number or pass in a channel number to use
         channel = connection.channel()
         # Creates an exchange if it does not already exist, and if the exchange exists,
         # verifies that it is of the correct and expected class.
